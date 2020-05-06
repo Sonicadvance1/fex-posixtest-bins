@@ -1,8 +1,15 @@
 #!/bin/bash
-shopt -s globstar
-echo log start > $2
-for i in **/*.test; do # Whitespace-safe and recursive
-    echo running "$i"
-    timeout 45s ${1}"$i"
-    echo "$i" $? >> ${2}
-done
+
+echo "Running native"
+rm -rf native
+time ./test-runner.sh ./ native
+
+echo
+echo "Running fexint ($1)"
+rm -rf fexint
+time ./test-runner.sh "$1 -U -c irint -n 500 -- " fexint
+
+echo
+echo "Running fexjit ($1)"
+rm -rf fexjit
+time ./test-runner.sh "$1 -U -c irjit -n 500 -- " fexjit
