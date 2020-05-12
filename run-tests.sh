@@ -1,9 +1,5 @@
 #!/bin/bash
 
-echo "Running native"
-rm -rf native
-time ./test-runner.sh ./ native
-
 echo
 echo "Running fexint ($1)"
 rm -rf fexint
