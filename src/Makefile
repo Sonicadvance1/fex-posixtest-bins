@@ -29,7 +29,7 @@ top_builddir = .
 
 LOGFILE = $(top_builddir)/logfile
 
-LDFLAGS := $(shell cat LDFLAGS | grep -v \^\#)
+LDFLAGS := $(shell cat LDFLAGS | grep -v \^\#) -lrt -lpthread
 
 RUN_TESTS := $(shell $(top_builddir)/locate-test \
              --execs $(top_builddir)/$(POSIX_TARGET))
@@ -54,7 +54,7 @@ stress-tests: stress-make stress-run
 tests-pretty:
 	$(MAKE) all | column -t -s:
 
-CFLAGS = -g -O2 -Wall -Werror -D_POSIX_C_SOURCE=200112L
+CFLAGS = -g -O2 -Wall -Wno-error -D_POSIX_C_SOURCE=200112L -Iinclude
 
 # add -std=c99, -std=gnu99 if compiler supports it (gcc-2.95.3 does not).
 check_gcc = $(shell if $(CC) $(1) -S -o /dev/null -xc /dev/null > /dev/null 2>&1; then echo "$(1)"; else echo "$(2)"; fi)
@@ -81,7 +81,7 @@ clean:
 	[ -f $< ] || exit 0; \
 	{ nm -g $< | grep -q " T main"; } || \
 	{ echo "$(@:.test=): link: SKIP" | tee -a $(LOGFILE) && exit 0; }; \
-	if $(CC) $(CFLAGS) $< -o $@ $(LDFLAGS) > $$COMPLOG 2>&1; \
+	if $(CC)  $(CFLAGS) $< -o $@ $(LDFLAGS) | tee -a $$COMPLOG 2>&1; \
 	then \
 		echo "$(@:.test=): link: PASS" | tee -a $(LOGFILE); \
 	else \
@@ -139,7 +139,7 @@ clean:
 
 $(top_builddir)/t0: $(top_builddir)/t0.c
 	@echo Building timeout helper files; \
-	$(CC) -O2 -o $@ $<
+	$(CC)  -O2 -o $@ $<
 	
 $(top_builddir)/t0.val: $(top_builddir)/t0
 	echo `$(top_builddir)/t0 0; echo $$?` > $(top_builddir)/t0.val
@@ -165,7 +165,7 @@ $(top_builddir)/t0.val: $(top_builddir)/t0
 .PRECIOUS: %.o
 %.o: %.c
 	@COMPLOG=$(LOGFILE).$$$$; \
-	if $(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@ $(LDFLAGS) > $$COMPLOG 2>&1; \
+	if $(CC)  $(CFLAGS) $(INCLUDE) -c $< -o $@ $(LDFLAGS) | tee -a $$COMPLOG 2>&1; \
 	then \
 		echo "$(@:.o=): build: PASS" | tee -a $(LOGFILE); \
 	else \

@@ -92,7 +92,7 @@ int main()
   /* File still exists */
 
   fd2 = open(tmpfname, O_RDWR, S_IRUSR | S_IWUSR);
-  if (fd == -1 && errno == ENOENT)
+  if (fd2 == -1 && errno == ENOENT)
   {  
     printf(TNAME " Error at open(): %s\n", 
            strerror(errno));   
@@ -100,6 +100,11 @@ int main()
     		    "add extra reference to the file associated with fd\n"); 
     exit(PTS_FAIL);
   }
+  else
+  {
+    close(fd2);
+  }
+  
   
   munmap (pa, size);
 

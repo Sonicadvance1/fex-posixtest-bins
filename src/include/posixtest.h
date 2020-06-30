@@ -15,3 +15,7 @@
 #define PTS_UNSUPPORTED 4
 #define PTS_UNTESTED    5
 
+#include <signal.h>
+#include <fcntl.h>
+#include <bits/siginfo-consts.h>
+#include <stddef.h>

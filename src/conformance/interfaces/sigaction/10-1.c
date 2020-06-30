@@ -15,6 +15,7 @@
 #include <sys/time.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <bits/siginfo-consts.h>
 
 #define NUMSTOPS 10
 
