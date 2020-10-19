@@ -1,2 +1,2 @@
-sigqueuemax 192716
+sigqueuemax 16382
 Test UNRESOLVED: call to sigqueue did not return success

@@ -1,12 +1,12 @@
-Raw time is 1589290314 
+Raw time is 1603122867 
 gmtime gives:
-sec 54
-min 31
-hour 13
-mday 12
-mon 04
+sec 27
+min 54
+hour 15
+mday 19
+mon 09
 year 2020
-wday 02
-yday 132
+wday 01
+yday 292
 isdst 00
 Test PASSED

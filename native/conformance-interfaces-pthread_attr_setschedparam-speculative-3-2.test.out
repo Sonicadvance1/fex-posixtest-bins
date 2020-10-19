@@ -1,1 +1,1 @@
-Test PASS
+unexpected error: pthread_attr_setschedpaarm 3-2: pthread_attr_setschedparam did not fail
